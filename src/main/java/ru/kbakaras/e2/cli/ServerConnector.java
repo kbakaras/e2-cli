@@ -18,10 +18,11 @@ import java.util.stream.Collectors;
 public class ServerConnector {
     private static final Logger logger = Logger.getLogger(ServerConnector.class.getName());
 
-    private String serverAddress = "http://localhost:10100/manage/";
+    private String serverAddress;
     private final Charset charset = Charset.forName("UTF-8");
 
-    public ServerConnector() {
+    public ServerConnector(String serverAddress) {
+        this.serverAddress = serverAddress;
         //this.serverAddress = ApplicationSettings.getInstance().getDefaultHost();
         //ApplicationSettings.getInstance().addListener(event -> serverAddress = ApplicationSettings.getInstance().getDefaultHost());
     }

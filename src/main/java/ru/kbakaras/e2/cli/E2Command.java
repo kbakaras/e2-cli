@@ -5,7 +5,10 @@ import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "e2", subcommands = {
+@Command(
+        name = "e2",
+        mixinStandardHelpOptions = true,
+        subcommands = {
         QueueCommand.class
 })
 public class E2Command implements Callable<Void> {

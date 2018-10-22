@@ -2,18 +2,32 @@ package ru.kbakaras.e2.cli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
-@Command(name = "queue")
+@Command(
+        name = "queue",
+        header = "Отобразить состояние очередей"
+)
 public class QueueCommand implements Callable<Void> {
     private ObjectMapper mapper = new ObjectMapper();
 
+    @Option(names = { "-s", "--server" })
+    private String server;
+
     @Override
     public Void call() throws Exception {
+        if (server == null) {
+            var env = System.getenv("e2.server");
+            server = env != null ? env : "localhost";
+        }
+
+        var serverAddress = "http://" + server + ":10100/manage/";
+        var connector = new ServerConnector(serverAddress);
+
         String json = mapper.writeValueAsString("test");
-        var connector = new ServerConnector();
 
         var result = connector.sendPost("Queue/stats", json, null);
         var tree = mapper.readTree((String) result.get("body"));
