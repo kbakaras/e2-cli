@@ -1,7 +1,6 @@
 package ru.kbakaras.e2.cli;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 public class ServerConnector {
     private static final Logger logger = Logger.getLogger(ServerConnector.class.getName());
 
-    private String serverAddress = "http://10.1.0.51:10100/manage/";
+    private String serverAddress = "http://localhost:10100/manage/";
     private final Charset charset = Charset.forName("UTF-8");
 
     public ServerConnector() {
