@@ -1,10 +1,12 @@
 package ru.kbakaras.e2.cli;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 @Command(
@@ -20,24 +22,24 @@ public class QueueCommand implements Callable<Void> {
     @Override
     public Void call() throws Exception {
         if (server == null) {
-            var env = System.getenv("e2.server");
+            String env = System.getenv("e2.server");
             server = env != null ? env : "localhost";
         }
 
-        var serverAddress = "http://" + server + ":10100/manage/";
-        var connector = new ServerConnector(serverAddress);
+        String serverAddress = "http://" + server + ":10100/manage/";
+        ServerConnector connector = new ServerConnector(serverAddress);
 
         String json = mapper.writeValueAsString("test");
 
-        var result = connector.sendPost("Queue/stats", json, null);
-        var tree = mapper.readTree((String) result.get("body"));
+        Map<String, Object> result = connector.sendPost("Queue/stats", json, null);
+        JsonNode tree = mapper.readTree((String) result.get("body"));
 
-        var table = new ConsoleTable();
+        ConsoleTable table = new ConsoleTable();
         table.setHeaders(FIELDS);
 
         tree.fieldNames().forEachRemaining(queueName -> {
             table.addValue(queueName);
-            var queueJson = tree.get(queueName);
+            JsonNode queueJson = tree.get(queueName);
             for (String field: FIELDS_Values) {
                 table.addValue(queueJson.get(field).asText());
             }

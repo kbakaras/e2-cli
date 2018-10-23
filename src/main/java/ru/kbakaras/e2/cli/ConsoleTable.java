@@ -38,8 +38,8 @@ public class ConsoleTable {
 
     @Override
     public String toString() {
-        var str = new StringBuilder();
-        var formats = new String[headers.length];
+        StringBuilder str = new StringBuilder();
+        String[] formats = new String[headers.length];
 
         for (int i = 0; i < headers.length; i++) {
             formats[i] = (i > 0 ? "  %" : "%") + widths[i] + "s";

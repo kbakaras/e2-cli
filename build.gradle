@@ -2,12 +2,19 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '4.0.1'
     id 'java'
     id 'application'
+    id "com.palantir.graal" version "0.1.1"
 }
 group 'ru.kbakaras.e2'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 10
-targetCompatibility = 10
+sourceCompatibility = 8
+targetCompatibility = 8
+
+graal {
+    mainClass 'ru.kbakaras.e2.cli.E2Command'
+    outputName 'e2'
+    graalVersion '1.0.0-rc8'
+}
 
 mainClassName = 'ru.kbakaras.e2.cli.E2Command'
 
@@ -18,7 +25,8 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'info.picocli:picocli:3.6.1'
+    compile 'info.picocli:picocli:3.7.0'
+    compile 'info.picocli:picocli-codegen:3.7.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
 
 }

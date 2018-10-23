@@ -80,7 +80,7 @@ public class ServerConnector {
     }
 
     private Map<String, Object> parseResponse(StringBuilder answer, HttpURLConnection connection) throws IOException {
-        var headers = connection.getHeaderFields();
+        Map<String, List<String>> headers = connection.getHeaderFields();
         HashMap<String, Object> result = new HashMap<String, Object>();
         result.put("headers", headers);
 
