@@ -13,8 +13,10 @@ graal {
     outputName 'e2'
     graalVersion '1.0.0-rc8'
     nativeImage {
-        option "-H:ReflectionConfigurationFiles=${project.buildDir}/graal/reflect.json"
+        option "-H:ReflectionConfigurationFiles=${project.buildDir}/reflect.json"
         option "-H:+ReportUnsupportedElementsAtRuntime"
+        option "--static"
+        option "--no-server"
         option "--enable-url-protocols=http"
     }
 }
@@ -32,9 +34,15 @@ dependencies {
 
 }
 
-task nativeConfig(type: JavaExec) {
+task nativeConfig(type: JavaExec, dependsOn: 'build') {
     group = 'graal'
     classpath = sourceSets.main.runtimeClasspath
     main = 'picocli.codegen.aot.graalvm.ReflectionConfigGenerator'
-    argsString = "ru.kbakaras.e2.cli.E2Command -o ${project.buildDir}/graal/reflect.json"
+    argsString = "ru.kbakaras.e2.cli.E2Command -o ${project.buildDir}/reflect.json"
+}
+
+task nativeDeploy(type: Exec) {
+    group = 'graal'
+    executable 'scp'
+    args "${project.buildDir}/graal/e2", "devel:/var/deploy/agr-SERVER/tools/"
 }
