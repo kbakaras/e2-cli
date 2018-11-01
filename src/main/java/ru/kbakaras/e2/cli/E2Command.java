@@ -2,6 +2,8 @@ package ru.kbakaras.e2.cli;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import ru.kbakaras.e2.cli.support.ServerConnector;
 
 import java.util.concurrent.Callable;
 
@@ -9,12 +11,19 @@ import java.util.concurrent.Callable;
         name = "e2",
         mixinStandardHelpOptions = true,
         subcommands = {
-        QueueCommand.class
+                StatsCommand.class,
+                ErrorCommand.class,
+                ResumeCommand.class
 })
 public class E2Command implements Callable<Void> {
+
+    @Option(names = { "-s", "--server" })
+    private String server;
+
+
     public static void main(String[] args) throws Exception {
-        new QueueCommand();
-        //Class.forName(QueueCommand.class.getName());
+        new StatsCommand();
+        //Class.forName(StatsCommand.class.getName());
         CommandLine.call(new E2Command(), args);
     }
 
@@ -22,4 +31,21 @@ public class E2Command implements Callable<Void> {
     public Void call() throws Exception {
         return null;
     }
+
+    public String server() {
+        if (server == null) {
+            String env = System.getenv("e2.server");
+            server = env != null ? env : "localhost";
+        }
+        return server;
+    }
+
+    public String serverAddress() {
+        return "http://" + server() + ":10100/manage/";
+    }
+
+    public ServerConnector createConnector() {
+        return new ServerConnector(serverAddress());
+    }
+
 }

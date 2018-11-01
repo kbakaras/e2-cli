@@ -1,4 +1,4 @@
-package ru.kbakaras.e2.cli;
+package ru.kbakaras.e2.cli.support;
 
 import java.util.ArrayList;
 import java.util.List;

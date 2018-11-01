@@ -45,4 +45,9 @@ task nativeDeploy(type: Exec) {
     group = 'graal'
     executable 'scp'
     args "${project.buildDir}/graal/e2", "devel:/var/deploy/agr-SERVER/tools/"
+    
+    copy {
+        from "${project.buildDir}/graal/e2"
+        into "${System.properties['user.home']}/bin/"
+    }
 }
