@@ -13,6 +13,7 @@ import java.util.concurrent.Callable;
         subcommands = {
                 StatsCommand.class,
                 ErrorCommand.class,
+                MessageCommand.class,
                 ResumeCommand.class
 })
 public class E2Command implements Callable<Void> {
