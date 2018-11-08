@@ -14,7 +14,9 @@ import java.util.concurrent.Callable;
                 StatsCommand.class,
                 ErrorCommand.class,
                 MessageCommand.class,
-                ResumeCommand.class
+                ResumeCommand.class,
+                ListCommand.class,
+                ReadCommand.class
 })
 public class E2Command implements Callable<Void> {
 
