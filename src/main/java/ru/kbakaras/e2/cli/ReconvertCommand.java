@@ -7,6 +7,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.ParentCommand;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(
@@ -17,15 +18,18 @@ public class ReconvertCommand implements Callable<Void> {
     @ParentCommand
     private E2Command parent;
 
+    @CommandLine.Option(names = { "-i", "--id" }, required = true, description = "Идентификатор сообщения (UUID)")
+    private UUID id;
+
     private ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public Void call() throws Exception {
         ObjectNode request = mapper.createObjectNode();
-        request.put("queue", "delivery"); //TODO Create parameter
+        request.put("id",    mapper.writeValueAsString(id));
 
         Map<String, Object> result = parent.createConnector().sendPost(
-                "Queue/resume",
+                "Queue/reconvert",
                 mapper.writeValueAsString(request),
                 null);
 
