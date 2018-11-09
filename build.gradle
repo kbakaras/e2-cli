@@ -34,11 +34,18 @@ dependencies {
 
 }
 
-task nativeConfig(type: JavaExec, dependsOn: 'build') {
+task reflectionConfig (type: JavaExec, dependsOn: 'build') {
     group = 'graal'
     classpath = sourceSets.main.runtimeClasspath
     main = 'picocli.codegen.aot.graalvm.ReflectionConfigGenerator'
     argsString = "ru.kbakaras.e2.cli.E2Command -o ${project.buildDir}/reflect.json"
+}
+
+task nativeConfig (type: JavaExec, dependsOn: 'reflectionConfig') {
+    group = 'graal'
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'picocli.AutoComplete'
+    argsString = "--name=e2 -o=${project.buildDir}/e2_completion ru.kbakaras.e2.cli.E2Command"
 }
 
 task nativeDeploy(type: Exec) {
@@ -48,6 +55,10 @@ task nativeDeploy(type: Exec) {
     
     copy {
         from "${project.buildDir}/graal/e2"
+        into "${System.properties['user.home']}/bin/"
+    }
+    copy {
+        from "${project.buildDir}/e2_completion"
         into "${System.properties['user.home']}/bin/"
     }
 }

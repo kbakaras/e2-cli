@@ -12,9 +12,8 @@ import java.util.concurrent.Callable;
         mixinStandardHelpOptions = true,
         subcommands = {
                 StatsCommand.class,
-                ErrorCommand.class,
-                MessageCommand.class,
                 ResumeCommand.class,
+                ProcessCommand.class,
                 ListCommand.class,
                 ReadCommand.class,
                 ReconvertCommand.class
@@ -52,4 +51,6 @@ public class E2Command implements Callable<Void> {
         return new ServerConnector(serverAddress());
     }
 
+    public static final String RESULT_SUCCESS = "SUCCESS";
+    public static final String RESULT_ERROR   = "ERROR";
 }
