@@ -45,7 +45,7 @@ task nativeConfig (type: JavaExec, dependsOn: 'reflectionConfig') {
     group = 'graal'
     classpath = sourceSets.main.runtimeClasspath
     main = 'picocli.AutoComplete'
-    argsString = "--name=e2 -o=${project.buildDir}/e2_completion ru.kbakaras.e2.cli.E2Command"
+    argsString = "--name=e2 -f -o=${project.buildDir}/e2_completion ru.kbakaras.e2.cli.E2Command"
 }
 
 task nativeDeploy(type: Exec) {
