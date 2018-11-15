@@ -27,6 +27,9 @@ public class ListCommand implements Callable<Void> {
     @Option(names = { "-t", "--stuck" }, description = "Флаг запроса только застрявших сообщений")
     private boolean stuck = false;
 
+    @Option(names = { "-p", "--processed" }, description = "Флаг запроса также и обработанных сообщений")
+    private boolean processed = false;
+
     @Option(names = { "-l", "--limit" }, description = "Ограничение количества возвращаемых сообщений (default: ${DEFAULT-VALUE})")
     private int limit = 10;
 
@@ -37,6 +40,7 @@ public class ListCommand implements Callable<Void> {
         ObjectNode request = mapper.createObjectNode();
         request.put("queue", "delivery");
         request.put("stuck", stuck);
+        request.put("processed", processed);
         request.put("limit", limit);
 
 
@@ -62,6 +66,6 @@ public class ListCommand implements Callable<Void> {
     }
 
     private static final String[] FIELDS = new String[] {
-            "id", "timestamp", "size", "attempt", "stuck"
+            "id", "timestamp", "size", "attempt", "stuck", "processed", "delivered"
     };
 }
