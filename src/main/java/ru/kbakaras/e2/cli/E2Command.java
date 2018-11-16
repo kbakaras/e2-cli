@@ -90,5 +90,6 @@ public class E2Command implements Callable<Void> {
             Arrays.copyOfRange(FIELDS, 1, FIELDS.length - 1);
 
     public static final String RESULT_SUCCESS = "SUCCESS";
+    public static final String RESULT_SKIPPED = "SKIPPED";
     public static final String RESULT_ERROR   = "ERROR";
 }

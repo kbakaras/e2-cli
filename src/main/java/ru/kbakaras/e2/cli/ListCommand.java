@@ -38,7 +38,7 @@ public class ListCommand implements Callable<Void> {
     @Override
     public Void call() throws Exception {
         ObjectNode request = mapper.createObjectNode();
-        request.put("queue", "delivery");
+        request.put("queue", queue.name());
         request.put("stuck", stuck);
         request.put("processed", processed);
         request.put("limit", limit);
