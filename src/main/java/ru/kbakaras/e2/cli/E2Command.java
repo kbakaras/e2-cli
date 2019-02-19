@@ -14,12 +14,13 @@ import java.util.concurrent.Callable;
 
 @Command(
         name = "e2",
-        header = "Без указани подкомманд отображает состояние всех очередей",
+        header = "Без указания подкомманд отображает состояние всех очередей",
         mixinStandardHelpOptions = true,
         subcommands = {
                 ResumeCommand.class,
                 StopCommand.class,
                 RevertCommand.class,
+                RepeatCommand.class,
                 ProcessCommand.class,
                 ListCommand.class,
                 ReadCommand.class,
