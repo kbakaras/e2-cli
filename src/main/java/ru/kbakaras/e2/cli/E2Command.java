@@ -24,7 +24,8 @@ import java.util.concurrent.Callable;
                 ProcessCommand.class,
                 ListCommand.class,
                 ReadCommand.class,
-                ReconvertCommand.class
+                ReconvertCommand.class,
+                ConfigCommand.class
 })
 public class E2Command implements Callable<Void> {
 
