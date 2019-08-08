@@ -66,6 +66,6 @@ public class ListCommand implements Callable<Void> {
     }
 
     private static final String[] FIELDS = new String[] {
-            "id", "timestamp", "size", "attempt", "stuck", "processed", "delivered"
+            "id", "timestamp", "size", "attempt", "stuck", "processed", "delivered", "destination"
     };
 }
