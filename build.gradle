@@ -35,6 +35,9 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
     compile group: 'commons-io',                 name: 'commons-io',       version: '2.6'
 
+    compile group: 'com.googlecode.lanterna',    name: 'lanterna',         version: '3.0.1'
+
+
 }
 
 task reflectionConfig (type: JavaExec, dependsOn: 'build') {
