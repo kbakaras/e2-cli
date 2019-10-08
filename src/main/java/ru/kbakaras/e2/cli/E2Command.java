@@ -2,10 +2,12 @@ package ru.kbakaras.e2.cli;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import ru.kbakaras.e2.cli.support.ConsoleTable;
+import ru.kbakaras.e2.cli.support.E2Queue;
 import ru.kbakaras.e2.cli.support.ServerConnector;
 
 import java.util.Arrays;
@@ -32,6 +34,9 @@ public class E2Command implements Callable<Void> {
     @Option(names = { "-s", "--server" })
     private String server;
 
+    @Option(names = { "-q", "--queue"}, description = "Запрашиваемая очередь")
+    private E2Queue queue;
+
     private ObjectMapper mapper = new ObjectMapper();
 
 
@@ -41,9 +46,15 @@ public class E2Command implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
+
+        ObjectNode request = mapper.createObjectNode();
+        if (queue != null && queue == E2Queue.delivery) {
+            request.put("queue", queue.name());
+        }
+
         Map<String, Object> result = createConnector().sendPost(
                 "Queue/stats",
-                mapper.writeValueAsString("test"),
+                mapper.writeValueAsString(request),
                 null);
 
         JsonNode tree = mapper.readTree((String) result.get("body"));
